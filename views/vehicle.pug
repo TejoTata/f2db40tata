@@ -1,0 +1,12 @@
+extends layout
+
+block content
+ h1= title
+ - var result = results
+    div.container-fluid
+      div.row
+         each item,index in result
+            div.col-sm-2(onclick=`buy(${index})`) vehicle_name: #{item["vehicle_name"]}  <br>  vehicle_type: #{item["vehicle_type"]} <br> vehicle_price : #{item["vehicle_price"]} 
+ script.
+      function buy(index){
+      alert("you purchased item "+(index+1))
