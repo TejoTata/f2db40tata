@@ -18,3 +18,6 @@ router.get('/vehicle/:id', vehicle_controller.vehicle_detail);
 // GET request for list of all vehicle items.
 router.get('/vehicle', vehicle_controller.vehicle_list);
 module.exports = router;
+// GET request for one costume. 
+router.get('/vehicle/:id', vehicle_controller.vehicle_detail); 
+ 
