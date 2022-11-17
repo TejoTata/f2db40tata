@@ -1,0 +1,42 @@
+extends layout
+block content
+  h1= title
+  if (toShow == null) 
+    h2 No instance to delete 
+  else      
+    - let vehicleid = toShow._id
+    - let vehicle_type = toShow.vehicle_type
+    - let vehicle_name = toShow.vehicle_name
+    - let vehicle_price = toShow.vehicle_price
+    div.row(class='mb-2')
+        div.mr-1 ID is
+        div #{vehicleid}
+    - let actionid = "/resource/vehicle/" + vehicleid
+    form(id='vehicleForm', action= actionid, method="PUT")
+        div.form-group
+            label.vehicleAttr(for='vehicle_type') vehicle type
+            input#vehicle_type(type='text', name='vehicle_type', value= vehicle_type )
+        div.form-group
+            label.vehicleAttr(for='vehicle_price') vehicle price
+            input#vehicle_price(type='number', name='vehicle_price', value= vehicle_price )
+        div.form-group
+            label.vehicleAttr(for='vehicle_name') vehicle name
+            input#vehicle_name(type='text', name='vehicle_name', value= vehicle_name )
+        input(type="submit")
+    script.
+        document.forms['vehicleForm'].addEventListener('submit', (event) => {
+        event.preventDefault();
+        // TODO do something here to show user that form is being submitted
+        fetch(event.target.action, {
+        method: 'PUT',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+        }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+        }).then((body) => {
+        alert("Update succeded")
+        // TODO handle body
+        }).catch((error) => {
+        // TODO handle error
+        alert("Update failed " + error )
+        });
+        });
