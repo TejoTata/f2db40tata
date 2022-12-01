@@ -1,24 +1,20 @@
 extends layout
 
 block content
+  h1=title
+  div(class='container' style="text-align: center;")
+        button.btn( onclick=`dispatch(\"/vehicle/create\")`) Create
+  - var k = [{"vehicle_name": "volvo", "vehicle_price": 220, "vehicle_type": "lemosin"},{"vehicle_name": "mrf", "vehicle_price": 100, "vehicle_type": "suv"},{"vehicle_name": "tvs", "vehicle_price": 120, "vehicle_type": "sedan"}]
   h1= title
-  -
   - let result=results
   div(class="container-fluid")
-     div(class='row m-1')
-        each item,index in result
-            -let destination = `dispatch(\"/vehicle/update?id=${item._id}\")`
-            div.col-sm-2(onclick=`buy(${index})`) vehicle Name: #{item["vehicle_name"]}  <br>  vehicle_type: #{item["vehicle_type"]} <br> vehicle_price: #{item["vehicle_price"]} 
-            button.btn(class="btn-primary ml-1", onclick = destination) Update
-  script.
-      function buy(index){
-         alert("you purchased item "+(index+1))
-      }
+    div(class="row m-1")
+        each item in results
+            div(class="row-sm-2", class="m-1") Vehicle Name: #{item.vehicle_name}<br>Vehicle Price: #{item.vehicle_price}<br>(Vehicle type: #{item.vehicle_type})<br>
+              button.btn(onclick=`dispatch(\"/vehicle/detail?id=${item._id}\")`) View
+              button.btn(onclick= `dispatch(\"/vehicle/update?id=${item._id}\")`) Update
+              button.btn(onclick= `dispatch(\"/vehicle/delete?id=${item._id}\")`) Delete
   script.
       function dispatch(path){
       window.location.href=path
       }
-   //- button(type='button',value='ok') ok
-   //- button(type='button',value='save') save
-   //- button(type='button',value='update') update
-   //- button(type='button',value='delete') delete
